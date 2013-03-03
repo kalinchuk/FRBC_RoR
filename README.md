@@ -33,7 +33,7 @@ All class notes will be shown here for reference.
 		```
 	* Create directory app/views/index
 	* Create app/views/index/index.html.erb
-		```rails
+		```html
 		<table border="1">
 		<% @users.each do |user| %>
 			<tr>

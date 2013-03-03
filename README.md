@@ -41,11 +41,11 @@ All class notes will be shown here for reference.
 				<td><%= user[:email] %></td>
 			</tr>
 		<% end %>
-		
-		<br><br>
-		
-		<%= Time.now %>
 		</table>
+
+		<br><br>
+
+		<%= Time.now %>
 		```
 	* Modify config/routes.rb, uncomment this line:
 		```ruby

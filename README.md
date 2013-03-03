@@ -33,7 +33,7 @@ All class notes will be shown here for reference.
 		```
 	* Create directory app/views/index
 	* Create app/views/index/index.html.erb
-		```ruby
+		```rails
 		<table border="1">
 		<% @users.each do |user| %>
 			<tr>
@@ -52,7 +52,7 @@ All class notes will be shown here for reference.
 		match ':controller(/:action(/:id))(.:format)'
 		```
 	* rails s (start the server)
-	* Visit http://localhost:3000/index/index
+	* Visit [http://localhost:3000/index/index](http://localhost:3000/index/index)
 * Conclusion [00:08:00]
 	* HW: Create additional users and fields (:location, :age, :gender)
 	* Github (https://github.com/kalinchuk/FRBC_RoR)

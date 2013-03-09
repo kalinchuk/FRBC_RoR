@@ -11,7 +11,7 @@ All class notes will be shown here for reference.
 
 * Intro [00:05:00]
 	* Pray
-	* Heroku (http://heroku.com)[http://heroku.com]
+	* Heroku: http://heroku.com
 * Questions and Answers [00:15:00]
 * Lynda (Controllers, Views, and Dynamic Content) [00:37:39]
 * Continue sample app (from previous class) [00:15:00]
@@ -41,7 +41,7 @@ All class notes will be shown here for reference.
 		<%= @name %>
 		```
 	* Start the server: rails s
-	* Visit (http://localhost:3000/)[http://localhost:3000/]
+	* Visit http://localhost:3000
 * Conclusion [00:05:00]
 	* HW: Change link to use _id_ (add to users hash) instead of _name_
 	* Pray
@@ -50,19 +50,15 @@ __Total: 1:17:39__
 
 _Hint: Methods return the last code in the method. You can add an array inside a method to be used by multiple methods in the controller. Calling all\_users inside the controller will give you the array of users._
 
-	```ruby
-	def all_users
+    def all_users
 		[
 			{:id => 1, :name => "John Smith", :email => "john.smith@gmail.com"}
 		]
 	end
-	```
 
 _Hint: An array can be searched using the select method. It will return all items in the array that match the condition inside the block ({|u| condition })._
 
-	```ruby
 	@name = all_users.select{|u| u[:id] == params[:id].to_i}.first[:name]
-	```
 
 
 ## 03/07/2013

@@ -7,6 +7,64 @@ Ruby on Rails training at FRBC.
 
 All class notes will be shown here for reference.
 
+## 03/14/2013
+
+* Intro [00:05:00]
+	* Pray
+	* Heroku (http://heroku.com)[http://heroku.com]
+* Questions and Answers [00:15:00]
+* Lynda (Controllers, Views, and Dynamic Content) [00:37:39]
+* Continue sample app (from previous class) [00:15:00]
+	* Add links to the _get_ view
+		```html
+		<table border="1">
+			<% @users.each do |user| %>
+				<tr>
+					<td><%= link_to(user[:name], {:action => 'show', :name => user[:name]}) %></td>
+					<td><%= link_to(user[:email], "mailto:#{user[:email]}") %></td>
+				</tr>
+			<% end %>
+		</table>
+
+		<br><br>
+
+		<%= Time.now %>
+		```
+	* Add a _show_ action in the users controller
+		```ruby
+		def show
+			@name = params[:name]
+		end
+		```
+	* Create a show.html.erb file under app/views/users/
+		```html
+		<%= @name %>
+		```
+	* Start the server: rails s
+	* Visit (http://localhost:3000/)[http://localhost:3000/]
+* Conclusion [00:05:00]
+	* HW: Change link to use _id_ (add to users hash) instead of _name_
+	* Pray
+
+__Total: 1:17:39__
+
+_Hint: Methods return the last code in the method. You can add an array inside a method to be used by multiple methods in the controller. Calling all\_users inside the controller will give you the array of users._
+
+	```ruby
+	def all_users
+		[
+			{:id => 1, :name => "John Smith", :email => "john.smith@gmail.com"}
+		]
+	end
+	```
+
+_Hint: An array can be searched using the select method. It will return all items in the array that match the condition inside the block ({|u| condition })._
+
+	```ruby
+	@name = all_users.select{|u| u[:id] == params[:id].to_i}.first[:name]
+	```
+
+
 ## 03/07/2013
 
 * Intro [00:03:00]
@@ -18,11 +76,11 @@ All class notes will be shown here for reference.
 	* rails new app_name
 	* cd app_name
 	* Remove public/index.html
-	* Create app/controller/index_controller.rb
+	* Create app/controller/users_controller.rb
 		```ruby
-		class IndexController < ApplicationController
+		class UsersController < ApplicationController
 
-		  def index
+		  def get
 		    @users = [
 		      {:name => "John Smith", :email => "john.smith@gmail.com"},
 		      {:name => "Mary Doe", :email => "mary.doe@gmail.com"}
@@ -31,8 +89,8 @@ All class notes will be shown here for reference.
 
 		end
 		```
-	* Create directory app/views/index
-	* Create app/views/index/index.html.erb
+	* Create directory app/views/users
+	* Create app/views/users/get.html.erb
 		```html
 		<table border="1">
 		<% @users.each do |user| %>
@@ -47,10 +105,15 @@ All class notes will be shown here for reference.
 
 		<%= Time.now %>
 		```
-	* Modify config/routes.rb, uncomment this line:
-		```ruby
-		match ':controller(/:action(/:id))(.:format)'
-		```
+	* Modify config/routes.rb
+		* Uncomment this line:
+			```ruby
+			match ':controller(/:action(/:id))(.:format)'
+			```
+		* Uncoment and modify this line:
+			```ruby
+			root :to => 'users#get'
+			```
 	* rails s (start the server)
 	* Visit [http://localhost:3000/index/index](http://localhost:3000/index/index)
 * Conclusion [00:08:00]

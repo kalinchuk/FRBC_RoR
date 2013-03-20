@@ -80,7 +80,7 @@ All class notes will be shown here for reference.
 		user = User.find(1) # gets the user with ID of 1
 		users = User.find(1,2) # gets the users with ID of 1 and 2
 		user = User.find(100) # fails, doesn't exist
-		user = User.find\_by\_id(100) # gets the user with ID of 1 but won't crash if doesn't exist
+		user = User.find_by_id(100) # gets the user with ID of 1 but won't crash if doesn't exist
 		```
 
 	* Querying methods
@@ -124,7 +124,7 @@ All class notes will be shown here for reference.
 			Add the following code to the migration:
 
 			```ruby
-			add\_column :users, :group_id, :integer
+			add_column :users, :group_id, :integer
 			```
 
 			And run the migration:
@@ -137,7 +137,7 @@ All class notes will be shown here for reference.
 			* Add belongs\_to to User
 
 				```ruby
-				belongs\_to :group
+				belongs_to :group
 				```
 
 			* Add has\_many to Group
@@ -161,7 +161,7 @@ All class notes will be shown here for reference.
 
 			puts group.users.inspect # print out all users in the group
 			```
-			
+
 * Conclusion [00:05:00]
 	* HW: Watch Models, ActiveRecord and ActiveRelation
 	* Pray

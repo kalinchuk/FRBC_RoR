@@ -15,13 +15,17 @@ All class notes will be shown here for reference.
 * Questions and Answers [00:15:00]
 * Go through all ActiveRecord actions [00:40:00]
 	* Generate a model (which also generates a migration)
-		```ruby
+
+		```
 		rails g model User name:string email:string age:integer
 		```
+
 	* Run the migration to create the _users_ table
-		```ruby
+
+		```
 		rake db:migrate
 		```
+		
 	* Create a new record
 		* Using _new_
 			```ruby

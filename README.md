@@ -25,9 +25,10 @@ All class notes will be shown here for reference.
 		```
 		rake db:migrate
 		```
-		
+
 	* Create a new record
 		* Using _new_
+
 			```ruby
 			user = User.new
 			user.name = "Mary Smith"
@@ -35,40 +36,55 @@ All class notes will be shown here for reference.
 			user.age = 40
 			user.save
 			```
+
 		* One-liner
+
 			```ruby
 			User.create(:name => "John Smith", :email => "john.smith@gmail.com", :age => 50)
 			User.create(:name => "Dave Smith")
 			```
+
 	* Updating a record
 		* Using _find_ and _save_
+
 			```ruby
 			user = User.find(1) # gets the user with ID of 1
 			user.name = "Mary Doe"
 			user.save
 			```
+
 		* One-liner
+
 			```ruby
 			user = User.find(2) # gets the user with ID of 2
 			user.update_attribute(:name, "John Doe")
 			```
+
 		* Multiple attributes at once
+
 			```ruby
 			user = User.find(2) # gets the user with ID of 2
 			user.update_attributes(:name => "John Smith", :age => 55)
+			```
+
 	* Deleting a record
+
 		```ruby
 		user = User.find(3) # gets the user with ID of 3
 		user.destroy
 		```
+
 	* Finding records
+
 		```ruby
 		user = User.find(1) # gets the user with ID of 1
 		users = User.find(1,2) # gets the users with ID of 1 and 2
 		user = User.find(100) # fails, doesn't exist
 		user = User.find\_by\_id(100) # gets the user with ID of 1 but won't crash if doesn't exist
 		```
+
 	* Querying methods
+
 		```ruby
 		users = User.where("name = 'John Smith'") # unsafe but will find all users with 'John Smith'
 		users = User.where("name = ?", "John Smith") # safer...does the same thing was previous
@@ -77,47 +93,67 @@ All class notes will be shown here for reference.
 		users = User.where("name LIKE ?", "%Smith%").order("name asc").limit(1) # returns only 1
 		users = User.where("name LIKE ?", "%Smith%").order("name asc").limit(1).offset(1) # returns 1 starting at the offset of 1
 		```
+
 	* Named scopes
 		* Add a scope to the User model
+
 			```ruby
 			scope :smiths, where("name LIKE ?", "%Smith%")
 			```
+
 		* Call the scope in the code
+
 			```ruby
 			users = User.smiths
 			```
+
 * Introduce relationships [00:15:00]
 	* one-to-many
 		* Generate another model - Group
+
 			```
 			rails g model Group name:string
 			```
+
 		* Add a group_id field to User
+
 			```
 			rails g migration AddGroupIdToUser
 			```
-			Add the following code to the migration
+
+			Add the following code to the migration:
+
 			```ruby
 			add\_column :users, :group_id, :integer
 			```
-			And run the migration
+
+			And run the migration:
+
 			```
 			rake db:migrate
 			```
+
 		* Add relationships to models
 			* Add belongs\_to to User
+
 				```ruby
 				belongs\_to :group
 				```
+
 			* Add has\_many to Group
+
 				```ruby
 				has_many :users
 				```
+
 		* Create a group
+
 			```ruby
 			group = Group.create(:name => "A group")
 			```
+
 		* Add users to a group
+
 			```ruby
 			group = Group.find(1) # get the group with ID of 1
 			group.users << User.find(1) # add user with ID 1
@@ -125,6 +161,7 @@ All class notes will be shown here for reference.
 
 			puts group.users.inspect # print out all users in the group
 			```
+			
 * Conclusion [00:05:00]
 	* HW: Watch Models, ActiveRecord and ActiveRelation
 	* Pray

@@ -7,15 +7,136 @@ Ruby on Rails training at FRBC.
 
 All class notes will be shown here for reference.
 
+## 03/21/2013
+
+* Intro [00:05:00]
+	* Pray
+	* http://www.code.org/ - Everyone should learn programming
+* Questions and Answers [00:15:00]
+* Go through all ActiveRecord actions [00:40:00]
+	* Generate a model (which also generates a migration)
+		```
+		rails g model User name:string email:string age:integer
+		```
+	* Run the migration to create the _users_ table
+		```
+		rake db:migrate
+		```
+	* Create a new record
+		* Using _new_
+			```ruby
+			user = User.new
+			user.name = "Mary Smith"
+			user.email = "mary.smith@gmail.com"
+			user.age = 40
+			user.save
+			```
+		* One-liner
+			```ruby
+			User.create(:name => "John Smith", :email => "john.smith@gmail.com", :age => 50)
+			User.create(:name => "Dave Smith")
+			```
+	* Updating a record
+		* Using _find_ and _save_
+			```ruby
+			user = User.find(1) # gets the user with ID of 1
+			user.name = "Mary Doe"
+			user.save
+			```
+		* One-liner
+			```ruby
+			user = User.find(2) # gets the user with ID of 2
+			user.update_attribute(:name, "John Doe")
+			```
+		* Multiple attributes at once
+			```ruby
+			user = User.find(2) # gets the user with ID of 2
+			user.update_attributes(:name => "John Smith", :age => 55)
+	* Deleting a record
+		```ruby
+		user = User.find(3) # gets the user with ID of 3
+		user.destroy
+		```
+	* Finding records
+		```ruby
+		user = User.find(1) # gets the user with ID of 1
+		users = User.find(1,2) # gets the users with ID of 1 and 2
+		user = User.find(100) # fails, doesn't exist
+		user = User.find\_by\_id(100) # gets the user with ID of 1 but won't crash if doesn't exist
+		```
+	* Querying methods
+		```ruby
+		users = User.where("name = 'John Smith'") # unsafe but will find all users with 'John Smith'
+		users = User.where("name = ?", "John Smith") # safer...does the same thing was previous
+		users = User.where("name LIKE ?", "%Smith%") # users that have 'Smith' in the name
+		users = User.where("name LIKE ?", "%Smith%").order("name asc") # orders by name (ascending)
+		users = User.where("name LIKE ?", "%Smith%").order("name asc").limit(1) # returns only 1
+		users = User.where("name LIKE ?", "%Smith%").order("name asc").limit(1).offset(1) # returns 1 starting at the offset of 1
+		```
+	* Named scopes
+		* Add a scope to the User model
+			```ruby
+			scope :smiths, where("name LIKE ?", "%Smith%")
+			```
+		* Call the scope in the code
+			```ruby
+			users = User.smiths
+			```
+* Introduce relationships [00:15:00]
+	* one-to-many
+		* Generate another model - Group
+			```
+			rails g model Group name:string
+			```
+		* Add a group_id field to User
+			```
+			rails g migration AddGroupIdToUser
+			```
+			Add the following code to the migration
+			```ruby
+			add\_column :users, :group_id, :integer
+			```
+			And run the migration
+			```
+			rake db:migrate
+			```
+		* Add relationships to models
+			* Add belongs\_to to User
+				```ruby
+				belongs\_to :group
+				```
+			* Add has\_many to Group
+				```ruby
+				has_many :users
+				```
+		* Create a group
+			```ruby
+			group = Group.create(:name => "A group")
+			```
+		* Add users to a group
+			```ruby
+			group = Group.find(1) # get the group with ID of 1
+			group.users << User.find(1) # add user with ID 1
+			group.users << User.find(2) # add user with ID 2
+
+			puts group.users.inspect # print out all users in the group
+			```
+* Conclusion [00:05:00]
+	* HW: Watch Models, ActiveRecord and ActiveRelation
+	* Pray
+
+__Total: 1:20:00__
+
+
 ## 03/14/2013
 
 * Intro [00:05:00]
 	* Pray
 	* Heroku: http://heroku.com
 * Questions and Answers [00:15:00]
-* Lynda (Controllers, Views, and Dynamic Content) [00:37:39]
-* Continue sample app (from previous class) [00:15:00]
-	* Add links to the _get_ view
+* ~~Lynda (Controllers, Views, and Dynamic Content) [00:37:39]~~
+* ~~Continue sample app (from previous class) [00:15:00]~~
+	* ~~Add links to the _get_ view~~
 		```html
 		<table border="1">
 			<% @users.each do |user| %>
@@ -30,23 +151,27 @@ All class notes will be shown here for reference.
 
 		<%= Time.now %>
 		```
-	* Add a _show_ action in the users controller
+	* ~~Add a _show_ action in the users controller~~
 		```ruby
 		def show
 			@name = params[:name]
 		end
 		```
-	* Create a show.html.erb file under app/views/users/
+	* ~~Create a show.html.erb file under app/views/users/~~
 		```html
 		<%= @name %>
 		```
-	* Start the server: rails s
-	* Visit http://localhost:3000
+	* ~~Start the server: rails s~~
+	* ~~Visit http://localhost:3000~~
+* Talk about Models and how they relate to databases [Inserted after class]
 * Conclusion [00:05:00]
-	* HW: Change link to use _id_ (add to users hash) instead of _name_
+	* ~~HW: Change link to use _id_ (add to users hash) instead of _name_~~
+	* HW: Watch Controllers, Views and Dynamic Content & Databases and Migrations
 	* Pray
 
 __Total: 1:17:39__
+
+Note: You don't need to install MySQL. SQLite is fine for now.
 
 _Hint: Methods return the last code in the method. You can add an array inside a method to be used by multiple methods in the controller. Calling all\_users inside the controller will give you the array of users._
 
@@ -103,11 +228,11 @@ _Hint: An array can be searched using the select method. It will return all item
 		```
 	* Modify config/routes.rb
 		* Uncomment this line:
-			```ruby
+			```
 			match ':controller(/:action(/:id))(.:format)'
 			```
 		* Uncoment and modify this line:
-			```ruby
+			```
 			root :to => 'users#get'
 			```
 	* rails s (start the server)

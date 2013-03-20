@@ -113,6 +113,7 @@ All class notes will be shown here for reference.
 			```ruby
 			group = Group.create(:name => "A group")
 			```
+			
 		* Add users to a group
 			```ruby
 			group = Group.find(1) # get the group with ID of 1

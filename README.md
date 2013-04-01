@@ -7,6 +7,103 @@ Ruby on Rails training at FRBC.
 
 All class notes will be shown here for reference.
 
+## 04/04/2013
+
+* Intro [00:05:00]
+	* Pray
+	* Announcement
+* Questions and Answers [00:15:00]
+* Mention CRUD [00:10:00]
+	* CRUD - Create, Read, Update, Delete
+	* The action called depends on the method passed (GET, POST, PUT, DELETE)
+* Flash [00:05:00]
+	* Used when displaying a message only once
+	* In your controller, you set the flash message
+
+		```ruby
+		flash[:notice] = "User created"
+		redirect_to users_path
+		```
+
+	* In your view, you display the flash message
+
+		```html
+		<%= flash[:notice] %>
+		```
+
+	* Flash can have different params such as `flash[:error]` or `flash[:message]`
+* Stylesheets & Javascript [00:10:00]
+	* Create files under `app/assets/stylesheets/` and `app/assets/javascripts/`
+	* The `application.css` and `application.js` files include all files in directory
+	* Including files in views
+
+		```html
+		<%= stylesheet_link_tag "application.css" %>
+		```
+
+		and
+
+		```html
+		<%= javascript_include_tag "application.js" %>
+		```
+
+* Images [00:05:00]
+	* Stored in `app/assets/images/`
+	* Displaying images in views
+
+		```html
+		<%= image_tag("some_image.png") %>
+		```
+
+* Layouts [00:05:00]
+	* Helps with using the same layout for all (or most) pages
+	* Stored in `app/views/layouts/`
+	* Using a layout, set it in the controller
+
+		```ruby
+		class SomeController < ApplicationController
+			layout 'my_layout'
+			...
+		end
+		```
+
+	* The layout can contain plain HTML
+	* To insert specific views for each action in the controller, use `yield`
+
+		```html
+		<%= yield %>
+		```
+
+* Helpers [00:10:00]
+	* `time_ago_in_words(Date.now - 1.5 days)`
+	* `truncate("Some text which will be truncated...can be configured")`
+	* `cycle('red', 'blue') # will cycle between red and blue each time it's called`
+	* More can be found here:
+		* [Text Helpers](http://api.rubyonrails.org/classes/ActionView/Helpers/TextHelper.html)
+		* [Number Helpers](http://api.rubyonrails.org/classes/ActionView/Helpers/NumberHelper.html)
+		* [Date and Time Helpers](http://api.rubyonrails.org/classes/ActionView/Helpers/DateHelper.html)
+	* Custom helpers
+		* Can be defined in `app/helpers/`
+		* For example, the default `application_helper.rb` lets me create a helper:
+
+			```ruby
+			module ApplicationHelper
+			  
+			  def my_name
+			  	"Artem Kalinchuk"
+			  end
+
+			end
+			```
+
+			I can call `<%= my_name %>` in a view and it will display my name
+* Conclusion [00:05:00]
+	* HW: Forms and Data Validations
+	* Next: Forms and Validations (User registration, login, etc.)
+	* Pray
+
+__Total: 1:10:00__
+
 ## 03/21/2013
 
 * Intro [00:05:00]

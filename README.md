@@ -7,6 +7,83 @@ Ruby on Rails training at FRBC.
 
 All class notes will be shown here for reference.
 
+## 04/11/2013
+
+* Intro [00:05:00]
+	* Pray
+	* Next class
+* Questions and Answers [00:15:00]
+* User authentication [00:30:00]
+	* Add the `devise` gem to your Gemfile and run `bundle install`
+
+		```ruby
+		gem 'devise'
+		```
+
+	* Run `rails generate devise:install` to install some files for devise (look at them)
+	* Run `rails generate devise MODEL` (replace MODEL with your model such as User)
+	* Run `rails generate devise:views` to generate the default views for devise
+	* May need to run `rake db:migrate` to migrate the DB changes
+	* Add the following to your controller to protect it:
+
+		```ruby
+		before_filter :authenticate_user!
+		```
+
+	* Add `except` or `only` for certain actions in the controller:
+
+		```ruby
+		before_filter :authenticate_user!, :except => [:some_action]
+		```
+
+		or
+
+		```ruby
+		before_filter :authenticate_user!, :only => [:some_action]
+		```
+
+	* Documentation and more information on the [Github page](https://github.com/plataformatec/devise)
+* Testing (RSpec) [00:10:00]
+	* Rails has built-in test suite (not as good)
+	* RSpec - gem for testing your application
+	* Add RSpec to your application Gemfile and run `bundle install`
+
+		```ruby
+		gem 'rspec'
+		```
+
+	* Create a spec for each model, controller and view
+	* Create a spec for our model called `user_spec.rb` in the `spec/models/` directory
+
+		```ruby
+		require "spec_helper"
+
+		describe User do
+			fixtures :all
+		  
+		  	it "" do
+		    	true.should_be true
+		  	end
+		end
+		```
+
+* Deploying to Heroku [00:15:00]
+	* Create a free account at [www.heroku.com](http://heroku.com)
+	* Follow the [Quick Start Guide](https://devcenter.heroku.com/articles/quickstart)
+	* Deploy application to heroku
+
+		```
+		git push heroku master
+		```
+
+	* Add-ons and dynos and how to scale
+	* Pointing a domain to the application
+* Conclusion [00:05:00]
+	* Next class?
+	* Pray
+
+__Total: 1:20:00__
+
 ## 04/04/2013
 
 * Intro [00:05:00]
